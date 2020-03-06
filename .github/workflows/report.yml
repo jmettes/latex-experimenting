@@ -19,8 +19,8 @@ jobs:
           files_changed=$(git diff --diff-filter=ACMRT --name-only -r ${{ github.event.before }} ${{ github.sha }})
           for file in $files_changed; do
             if [[ $file =~ .*\.ipynb$ ]]; then
-              jupyter nbconvert --to markdown $file
-              git add "${file%.*}".md
+              jupyter nbconvert --to html $file
+              git add "${file%.*}".html
             fi
           done 
       - name: Commit report

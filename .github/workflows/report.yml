@@ -5,9 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Create report file
         run: |
-          git fetch origin
           files_changed=$(git diff --name-only -r ${{ github.event.before }} ${{ github.sha }})
           for file in $files_changed; do echo - $file >> report.txt; done 
       - name: Commit report

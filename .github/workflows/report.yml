@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # fetch full history (non-shallow), otherwise diff will only know about last commit
       - uses: actions/setup-python@v1
         with:
           python-version: '3.7'
@@ -16,15 +16,15 @@ jobs:
           pip install nbconvert
       - name: Create report file
         run: |
-          files_changed=$(git diff --diff-filter=ACMRT --name-only -r ${{ github.event.before }} ${{ github.sha }})
+          files_changed=$(git diff --diff-filter=ACMRT --name-only -r ${{ github.event.before }} ${{ github.sha }}) # filter add/change/etc files; between last pushed commit and current commit (pushes can contain more than one commit)
           for file in $files_changed; do
             if [[ $file =~ .*\.ipynb$ ]]; then
               jupyter nbconvert --to html $file
               git add "${file%.*}".html
             fi
-          done 
+          done # TODO: clean up removed files
       - name: Commit report
         run: |
           git config --global user.name 'Jonathan Mettes'
           git config --global user.email 'jmettes@users.noreply.github.com'
-          git diff --quiet && git diff --staged --quiet || git commit -m "Automatic nbconvert" && git push
+          git diff --quiet && git diff --staged --quiet || git commit -m "Automatic nbconvert" && git push # only commit/push of changes

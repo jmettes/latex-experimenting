@@ -6,7 +6,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Create report file
-        run: date +%s > report.txt
+        run: |
+          date +%s >> report.txt
+          files_changed=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }})
+          for file in $files_changed; do echo - $file; done 
       - name: Commit report
         run: |
           git config --global user.name 'Jonathan Mettes'

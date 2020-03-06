@@ -14,7 +14,7 @@ jobs:
       - name: Install Python
         run: |
           pip install nbconvert
-      - name: Create report file
+      - name: nbconvert
         run: |
           files_changed=$(git diff --diff-filter=ACMRT --name-only -r ${{ github.event.before }} ${{ github.sha }}) # filter add/change/etc files; between last pushed commit and current commit (pushes can contain more than one commit)
           for file in $files_changed; do

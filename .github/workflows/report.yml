@@ -27,5 +27,4 @@ jobs:
         run: |
           git config --global user.name 'Jonathan Mettes'
           git config --global user.email 'jmettes@users.noreply.github.com'
-          git commit -am "Automatic nbconvert"
-          git push
+          git diff --quiet && git diff --staged --quiet || git commit -m "Automatic nbconvert" && git push

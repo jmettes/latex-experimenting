@@ -1,1 +1,1 @@
-[index.html](index.html)
+[view rendered](http://jmettes.github.io/latex-experimenting)

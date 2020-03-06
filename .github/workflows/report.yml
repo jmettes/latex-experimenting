@@ -20,7 +20,7 @@ jobs:
           for file in $files_changed; do
             if [[ $file =~ .*\.ipynb$ ]]; then
               jupyter nbconvert --to markdown $file
-              git add $file
+              git add "${file%.*}".md
             fi
           done 
       - name: Commit report

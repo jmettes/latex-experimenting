@@ -15,12 +15,14 @@ jobs:
         run: |
           pip install nbconvert
       - name: nbconvert
+        env:
+          PYTHONPATH: $PYTHONPATH:scripts
         run: |
           files_changed=$(git diff --diff-filter=ACMRT --name-only -r ${{ github.event.before }} ${{ github.sha }}) # filter add/change/etc files; between last pushed commit and current commit (pushes can contain more than one commit)
           for file in $files_changed; do # TODO: auto update README.md with TOC of files
             if [[ $file =~ .*\.ipynb$ ]]; then
-              jupyter nbconvert --to html $file # TODO: --output-dir static/notebooks/; --to markdown: https://predictablynoisy.com/jekyll-markdown-nbconvert
-              git add "${file%.*}".html
+              jupyter nbconvert --template scripts/template.tpl --to markdown_exporter.MarkdownInlineImageExporter $file # TODO: --output-dir static/notebooks/; --to markdown: https://predictablynoisy.com/jekyll-markdown-nbconvert
+              git add "${file%.*}".md
             fi
           done # TODO: clean up removed files
       - name: Commit report

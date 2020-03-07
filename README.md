@@ -6,5 +6,5 @@ This repo is an experiment of rendering LaTeX and Jupyter notebooks using Github
 
 * Using Github Actions hacks to automatically generate HTML renderings of Jupyter Notebooks using nbconvert
   - [ipynb source](plot.ipynb)
-  - [HTML nbconvert rendering](http://jmettes.github.io/latex-experimenting/plot.html)
+  - [HTML nbconvert rendering](http://jmettes.github.io/latex-experimenting/plot)
   - [Github Actions workflow](.github/workflows/nbconvert.yml)
